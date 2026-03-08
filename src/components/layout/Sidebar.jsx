@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getPendingConversions } from '../../api/conversions'
 import { getSessions } from '../../api/chat'
+import jadeLogo from '../../assets/Jade 1.1.png'
 
 const navItems = [
   {
@@ -108,8 +109,8 @@ export default function Sidebar({ mobile = false, onClose }) {
     <aside className={`flex flex-col h-full ${mobile ? 'w-full' : 'w-64'} bg-jade-800 border-r border-jade-700/20`}>
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-jade-700/20">
-        <div className="w-8 h-8 bg-jade-400 rounded-lg flex items-center justify-center shrink-0">
-          <span className="text-jade-900 font-black text-sm">JG</span>
+        <div className="w-8 h-8 flex items-center justify-center shrink-0">
+          <img src={jadeLogo} alt="Jadegate" className="h-8 w-auto" />
         </div>
         <div>
           <p className="font-bold text-jade-50 text-sm leading-none">Jadegate</p>

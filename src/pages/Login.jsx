@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import toast from 'react-hot-toast'
+import jadeLogo from '../assets/Jade 1.1.png'
 
 export default function Login() {
   const { login, isAuthenticated, loading } = useAuth()
@@ -41,8 +42,8 @@ export default function Login() {
       <div className="relative w-full max-w-md">
         {/* Logo */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-14 h-14 bg-jade-400 rounded-2xl mb-4 shadow-lg shadow-jade-400/20">
-            <span className="text-jade-900 font-black text-xl">JG</span>
+          <div className="inline-flex items-center justify-center mb-4">
+            <img src={jadeLogo} alt="Jadegate" className="h-14 w-auto" />
           </div>
           <h1 className="text-2xl font-bold text-jade-50">Jadegate Admin</h1>
           <p className="text-jade-warm text-sm mt-1">NGN ⇄ RMB Operations Console</p>
