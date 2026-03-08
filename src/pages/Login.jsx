@@ -35,25 +35,26 @@ export default function Login() {
     <div className="min-h-screen bg-jade-900 flex items-center justify-center p-4">
       {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-96 h-96 bg-jade-400/5 rounded-full blur-3xl" />
-        <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-jade-700/10 rounded-full blur-3xl" />
+        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-jade-400/5 rounded-full blur-[100px]" />
+        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-jade-700/8 rounded-full blur-[100px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-jade-400/[0.02] rounded-full blur-[120px]" />
       </div>
 
-      <div className="relative w-full max-w-md">
+      <div className="relative w-full max-w-[420px] animate-fade-in-up">
         {/* Logo */}
         <div className="text-center mb-8">
           <div className="inline-flex items-center justify-center mb-4">
             <img src={jadeLogo} alt="Jadegate" className="h-14 w-auto" />
           </div>
-          <h1 className="text-2xl font-bold text-jade-50">Jadegate Admin</h1>
-          <p className="text-jade-warm text-sm mt-1">NGN ⇄ RMB Operations Console</p>
+          <h1 className="text-2xl font-bold text-jade-50 tracking-tight">Jadegate Admin</h1>
+          <p className="text-jade-warm/60 text-sm mt-1">NGN ⇄ RMB Operations Console</p>
         </div>
 
         {/* Card */}
-        <div className="bg-jade-800/80 backdrop-blur rounded-2xl border border-jade-700/40 p-8 shadow-2xl">
+        <div className="bg-jade-800/70 backdrop-blur-xl rounded-2xl border border-jade-700/25 p-8 shadow-2xl shadow-black/30">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
-              <label className="block text-sm font-medium text-jade-50/80 mb-1.5">
+              <label className="block text-[13px] font-medium text-jade-50/70 mb-2">
                 Email Address
               </label>
               <input
@@ -63,12 +64,12 @@ export default function Login() {
                 value={form.email}
                 onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                 placeholder="admin@jadegate.com"
-                className="w-full bg-jade-900 border border-jade-700/40 text-jade-50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/50 focus:border-jade-400/50 placeholder-jade-700 transition-colors"
+                className="w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 transition-all"
               />
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-jade-50/80 mb-1.5">
+              <label className="block text-[13px] font-medium text-jade-50/70 mb-2">
                 Password
               </label>
               <div className="relative">
@@ -78,12 +79,12 @@ export default function Login() {
                   value={form.password}
                   onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
                   placeholder="••••••••"
-                  className="w-full bg-jade-900 border border-jade-700/40 text-jade-50 rounded-lg px-4 py-2.5 pr-10 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/50 focus:border-jade-400/50 placeholder-jade-700 transition-colors"
+                  className="w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-4 py-3 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 transition-all"
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword((v) => !v)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-jade-warm hover:text-jade-50 transition-colors"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md text-jade-warm/50 hover:text-jade-50 transition-colors"
                 >
                   {showPassword ? (
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -103,7 +104,7 @@ export default function Login() {
             </div>
 
             {error && (
-              <div className="flex items-center gap-2 p-3 bg-red-400/10 border border-red-400/20 rounded-lg text-red-400 text-sm">
+              <div className="flex items-center gap-2 p-3 bg-red-400/8 border border-red-400/15 rounded-xl text-red-400 text-sm">
                 <svg className="w-4 h-4 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
                     d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -112,24 +113,26 @@ export default function Login() {
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={submitting}
-              className="w-full bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-lg py-2.5 text-sm transition-colors disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-            >
-              {submitting ? (
-                <>
-                  <span className="w-4 h-4 border-2 border-jade-900/30 border-t-jade-900 rounded-full animate-spin" />
-                  Signing in...
-                </>
-              ) : (
-                'Sign In'
-              )}
-            </button>
+            <div className="pt-1">
+              <button
+                type="submit"
+                disabled={submitting}
+                className="w-full bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-xl py-3 text-sm transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-jade-400/20"
+              >
+                {submitting ? (
+                  <>
+                    <span className="w-4 h-4 border-2 border-jade-900/30 border-t-jade-900 rounded-full animate-spin" />
+                    Signing in...
+                  </>
+                ) : (
+                  'Sign In'
+                )}
+              </button>
+            </div>
           </form>
         </div>
 
-        <p className="text-center text-xs text-jade-700/60 mt-6">
+        <p className="text-center text-xs text-jade-700/40 mt-6">
           Restricted access — authorized administrators only
         </p>
       </div>

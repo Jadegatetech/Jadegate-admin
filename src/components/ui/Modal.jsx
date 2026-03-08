@@ -24,22 +24,22 @@ export default function Modal({ isOpen, onClose, title, children, size = 'md' })
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
       <div
-        className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+        className="absolute inset-0 bg-black/65 backdrop-blur-sm animate-backdrop-enter"
         onClick={onClose}
       />
-      <div className={`relative w-full ${sizes[size]} bg-jade-800 rounded-xl border border-jade-700/40 shadow-2xl max-h-[90vh] flex flex-col`}>
-        <div className="flex items-center justify-between p-5 border-b border-jade-700/40 shrink-0">
-          <h2 className="text-lg font-semibold text-jade-50">{title}</h2>
+      <div className={`relative w-full ${sizes[size]} bg-jade-800 rounded-2xl border border-jade-700/30 shadow-2xl shadow-black/40 max-h-[90vh] flex flex-col animate-modal-enter`}>
+        <div className="flex items-center justify-between px-6 py-4 border-b border-jade-700/25 shrink-0">
+          <h2 className="text-base font-semibold text-jade-50">{title}</h2>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-jade-warm hover:text-jade-50 hover:bg-jade-700/20 transition-colors"
+            className="p-1.5 rounded-lg text-jade-warm/60 hover:text-jade-50 hover:bg-jade-700/20 transition-colors"
           >
             <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
-        <div className="overflow-y-auto p-5 flex-1">
+        <div className="overflow-y-auto px-6 py-5 flex-1">
           {children}
         </div>
       </div>

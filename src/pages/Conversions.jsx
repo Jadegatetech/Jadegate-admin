@@ -74,20 +74,20 @@ export default function Conversions() {
   return (
     <div className="space-y-5">
       <div>
-        <h1 className="text-2xl font-bold text-jade-50">All Conversions</h1>
-        <p className="text-jade-warm text-sm mt-0.5">Browse and manage all conversion transactions</p>
+        <h1 className="text-2xl font-bold text-jade-50 tracking-tight">All Conversions</h1>
+        <p className="text-jade-warm/60 text-sm mt-1">Browse and manage all conversion transactions</p>
       </div>
 
       {/* Status filter tabs */}
-      <div className="flex gap-1 p-1 bg-jade-800 rounded-lg w-fit flex-wrap">
+      <div className="flex gap-1 p-1 bg-jade-800/80 rounded-xl w-fit flex-wrap border border-jade-700/15">
         {STATUSES.map((s) => (
           <button
             key={s}
             onClick={() => { setStatusFilter(s); setPage(1) }}
-            className={`px-3 py-1.5 rounded-md text-sm font-medium capitalize transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-[13px] font-medium capitalize transition-all ${
               statusFilter === s
-                ? 'bg-jade-400 text-jade-900'
-                : 'text-jade-warm hover:text-jade-50'
+                ? 'bg-jade-400 text-jade-900 shadow-sm shadow-jade-400/20'
+                : 'text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15'
             }`}
           >
             {s}
@@ -96,7 +96,7 @@ export default function Conversions() {
       </div>
 
       {/* Table */}
-      <div className="bg-jade-800 border border-jade-700/40 rounded-xl overflow-hidden">
+      <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
         {isError ? (
           <ErrorState message="Failed to load conversions" onRetry={refetch} />
         ) : (
@@ -104,15 +104,15 @@ export default function Conversions() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-jade-700/40">
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">User</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">NGN</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">RMB</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Rate</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Method</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Status</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Date</th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-jade-warm uppercase tracking-wider">Actions</th>
+                  <tr className="border-b border-jade-700/25">
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">User</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">NGN</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">RMB</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Rate</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Method</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Status</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Date</th>
+                    <th className="px-5 py-3.5 text-right text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -120,7 +120,7 @@ export default function Conversions() {
                     <SkeletonTable rows={8} cols={8} />
                   ) : conversions.length === 0 ? (
                     <tr>
-                      <td colSpan={8} className="px-4 py-12 text-center text-jade-700">
+                      <td colSpan={8} className="px-5 py-16 text-center text-jade-700/60">
                         No conversions found
                       </td>
                     </tr>
@@ -129,41 +129,41 @@ export default function Conversions() {
                       <tr
                         key={c._id}
                         onClick={() => setSelectedConversion(c)}
-                        className="border-b border-jade-700/40 hover:bg-jade-700/20 cursor-pointer transition-colors"
+                        className="border-b border-jade-700/15 hover:bg-jade-700/10 cursor-pointer transition-colors group"
                       >
-                        <td className="px-4 py-3">
+                        <td className="px-5 py-3.5">
                           <div>
                             <p className="text-sm font-medium text-jade-50">{c.user?.fullName ?? '—'}</p>
-                            <p className="text-xs text-jade-700">{c.user?.email}</p>
+                            <p className="text-xs text-jade-700/70">{c.user?.email}</p>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm text-jade-50 font-medium whitespace-nowrap">{formatNGN(c.amountNGN)}</td>
-                        <td className="px-4 py-3 text-sm text-jade-50 whitespace-nowrap">{formatRMB(c.amountRMB)}</td>
-                        <td className="px-4 py-3 text-sm text-jade-warm">{c.rateUsed ?? '—'}</td>
-                        <td className="px-4 py-3">
+                        <td className="px-5 py-3.5 text-sm text-jade-50 font-medium whitespace-nowrap">{formatNGN(c.amountNGN)}</td>
+                        <td className="px-5 py-3.5 text-sm text-jade-50/80 whitespace-nowrap">{formatRMB(c.amountRMB)}</td>
+                        <td className="px-5 py-3.5 text-sm text-jade-warm/60">{c.rateUsed ?? '—'}</td>
+                        <td className="px-5 py-3.5">
                           <Badge
                             status={c.receivingMethod}
                             label={c.receivingMethod === 'chinese_bank' ? 'Chinese Bank' : 'Alipay'}
                           />
                         </td>
-                        <td className="px-4 py-3">
+                        <td className="px-5 py-3.5">
                           <Badge status={c.status} />
                         </td>
-                        <td className="px-4 py-3 text-sm text-jade-warm whitespace-nowrap">
+                        <td className="px-5 py-3.5 text-sm text-jade-warm/60 whitespace-nowrap">
                           {c.createdAt ? new Date(c.createdAt).toLocaleDateString() : '—'}
                         </td>
-                        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                        <td className="px-5 py-3.5" onClick={(e) => e.stopPropagation()}>
                           {c.status === 'pending' && (
                             <div className="flex items-center justify-end gap-1.5">
                               <button
                                 onClick={() => setActionState({ conversion: c, type: 'complete' })}
-                                className="px-2.5 py-1 bg-green-500/20 hover:bg-green-500/30 text-green-400 text-xs font-medium rounded-md transition-colors"
+                                className="px-2.5 py-1.5 bg-green-500/15 hover:bg-green-500/25 text-green-400 text-xs font-medium rounded-lg transition-all"
                               >
                                 Complete
                               </button>
                               <button
                                 onClick={() => setActionState({ conversion: c, type: 'fail' })}
-                                className="px-2.5 py-1 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-medium rounded-md transition-colors"
+                                className="px-2.5 py-1.5 bg-red-500/15 hover:bg-red-500/25 text-red-400 text-xs font-medium rounded-lg transition-all"
                               >
                                 Fail
                               </button>

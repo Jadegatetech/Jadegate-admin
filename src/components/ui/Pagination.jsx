@@ -12,30 +12,30 @@ export default function Pagination({ page, pages, total, limit, onPage }) {
   }
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 border-t border-jade-700/40">
-      <p className="text-sm text-jade-warm">
+    <div className="flex items-center justify-between px-5 py-3.5 border-t border-jade-700/25">
+      <p className="text-[13px] text-jade-warm/70">
         Showing <span className="font-medium text-jade-50">{from}–{to}</span> of{' '}
-        <span className="font-medium text-jade-50">{total}</span> results
+        <span className="font-medium text-jade-50">{total}</span>
       </p>
       <div className="flex items-center gap-1">
         <button
           onClick={() => onPage(page - 1)}
           disabled={page <= 1}
-          className="px-2 py-1.5 text-sm rounded-lg text-jade-warm hover:text-jade-50 hover:bg-jade-700/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="px-2.5 py-1.5 text-[13px] rounded-lg text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
           ‹ Prev
         </button>
         {getPages().map((p, i) =>
           p === '...' ? (
-            <span key={`ellipsis-${i}`} className="px-2 text-jade-700">…</span>
+            <span key={`ellipsis-${i}`} className="px-1.5 text-jade-700/50">…</span>
           ) : (
             <button
               key={p}
               onClick={() => onPage(p)}
-              className={`w-8 h-8 text-sm rounded-lg transition-colors ${
+              className={`w-8 h-8 text-[13px] rounded-lg transition-all ${
                 p === page
-                  ? 'bg-jade-400 text-jade-900 font-semibold'
-                  : 'text-jade-warm hover:text-jade-50 hover:bg-jade-700/20'
+                  ? 'bg-jade-400 text-jade-900 font-semibold shadow-sm shadow-jade-400/20'
+                  : 'text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15'
               }`}
             >
               {p}
@@ -45,7 +45,7 @@ export default function Pagination({ page, pages, total, limit, onPage }) {
         <button
           onClick={() => onPage(page + 1)}
           disabled={page >= pages}
-          className="px-2 py-1.5 text-sm rounded-lg text-jade-warm hover:text-jade-50 hover:bg-jade-700/20 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+          className="px-2.5 py-1.5 text-[13px] rounded-lg text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
         >
           Next ›
         </button>

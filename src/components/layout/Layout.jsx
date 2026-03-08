@@ -17,10 +17,10 @@ export default function Layout() {
       {sidebarOpen && (
         <div className="lg:hidden fixed inset-0 z-40 flex">
           <div
-            className="absolute inset-0 bg-black/60 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/60 backdrop-blur-sm animate-backdrop-enter"
             onClick={() => setSidebarOpen(false)}
           />
-          <div className="relative z-50 w-64">
+          <div className="relative z-50 w-64 animate-slide-in-left">
             <Sidebar mobile onClose={() => setSidebarOpen(false)} />
           </div>
         </div>
@@ -29,8 +29,10 @@ export default function Layout() {
       {/* Main content */}
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <Navbar onMenuToggle={() => setSidebarOpen((v) => !v)} />
-        <main className="flex-1 overflow-y-auto bg-jade-900 p-6">
-          <Outlet />
+        <main className="flex-1 overflow-y-auto bg-jade-900 p-4 md:p-6 lg:p-8">
+          <div className="max-w-[1600px] mx-auto">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

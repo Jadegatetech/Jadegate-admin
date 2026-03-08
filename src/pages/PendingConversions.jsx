@@ -71,20 +71,20 @@ export default function PendingConversions() {
       <div className="flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-jade-50">Pending Conversions</h1>
+            <h1 className="text-2xl font-bold text-jade-50 tracking-tight">Pending Conversions</h1>
             {totalPending > 0 && (
               <span className="bg-jade-400 text-jade-900 text-sm font-bold px-2.5 py-1 rounded-full">
                 {totalPending}
               </span>
             )}
           </div>
-          <p className="text-jade-warm text-sm mt-0.5">
+          <p className="text-jade-warm/60 text-sm mt-1">
             Oldest conversions first — review and take action
           </p>
         </div>
         <button
           onClick={() => refetch()}
-          className="flex items-center gap-2 px-3 py-2 bg-jade-700/20 hover:bg-jade-700/30 text-jade-50 text-sm rounded-lg transition-colors"
+          className="flex items-center gap-2 px-3.5 py-2 bg-jade-700/15 hover:bg-jade-700/25 text-jade-50 text-sm rounded-xl transition-all hover:-translate-y-0.5"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -96,19 +96,21 @@ export default function PendingConversions() {
 
       {/* Info banner */}
       {!isLoading && totalPending > 0 && (
-        <div className="flex items-center gap-3 p-3 bg-jade-400/10 border border-jade-400/20 rounded-lg">
-          <svg className="w-5 h-5 text-jade-400 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
-              d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <p className="text-sm text-jade-100">
+        <div className="flex items-center gap-3 p-3.5 bg-jade-400/8 border border-jade-400/15 rounded-xl">
+          <div className="w-8 h-8 rounded-lg bg-jade-400/15 flex items-center justify-center shrink-0">
+            <svg className="w-4 h-4 text-jade-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
+                d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <p className="text-sm text-jade-100/80">
             <span className="font-semibold">{totalPending} conversion{totalPending !== 1 ? 's' : ''}</span> awaiting processing. Auto-refreshes every 30 seconds.
           </p>
         </div>
       )}
 
       {/* Table */}
-      <div className="bg-jade-800 border border-jade-700/40 rounded-xl overflow-hidden">
+      <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
         {isError ? (
           <ErrorState message="Failed to load pending conversions" onRetry={refetch} />
         ) : (
@@ -116,14 +118,14 @@ export default function PendingConversions() {
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b border-jade-700/40">
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">User</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">NGN Amount</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">RMB Amount</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Rate</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Method</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Submitted</th>
-                    <th className="px-4 py-3 text-right text-xs font-semibold text-jade-warm uppercase tracking-wider">Actions</th>
+                  <tr className="border-b border-jade-700/25">
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">User</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">NGN Amount</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">RMB Amount</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Rate</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Method</th>
+                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Submitted</th>
+                    <th className="px-5 py-3.5 text-right text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -131,15 +133,15 @@ export default function PendingConversions() {
                     <SkeletonTable rows={10} cols={7} />
                   ) : conversions.length === 0 ? (
                     <tr>
-                      <td colSpan={7} className="px-4 py-16 text-center">
+                      <td colSpan={7} className="px-5 py-16 text-center">
                         <div className="flex flex-col items-center gap-3">
-                          <div className="w-12 h-12 rounded-full bg-green-400/10 flex items-center justify-center">
+                          <div className="w-12 h-12 rounded-2xl bg-green-400/10 border border-green-400/15 flex items-center justify-center">
                             <svg className="w-6 h-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                           </div>
-                          <p className="text-jade-warm font-medium">All clear!</p>
-                          <p className="text-jade-700 text-sm">No pending conversions at the moment.</p>
+                          <p className="text-jade-warm/80 font-medium">All clear!</p>
+                          <p className="text-jade-700/60 text-sm">No pending conversions at the moment.</p>
                         </div>
                       </td>
                     </tr>
@@ -148,45 +150,45 @@ export default function PendingConversions() {
                       <tr
                         key={c._id}
                         onClick={() => setSelectedConversion(c)}
-                        className="border-b border-jade-700/40 hover:bg-jade-700/20 cursor-pointer transition-colors"
+                        className="border-b border-jade-700/15 hover:bg-jade-700/10 cursor-pointer transition-colors"
                       >
-                        <td className="px-4 py-3">
+                        <td className="px-5 py-3.5">
                           <div>
                             <p className="text-sm font-medium text-jade-50">{c.user?.fullName ?? '—'}</p>
-                            <p className="text-xs text-jade-700">{c.user?.email}</p>
+                            <p className="text-xs text-jade-700/70">{c.user?.email}</p>
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm font-semibold text-jade-50 whitespace-nowrap">{formatNGN(c.amountNGN)}</td>
-                        <td className="px-4 py-3 text-sm text-jade-50 whitespace-nowrap">{formatRMB(c.amountRMB)}</td>
-                        <td className="px-4 py-3 text-sm text-jade-warm">{c.rateUsed ?? '—'}</td>
-                        <td className="px-4 py-3">
+                        <td className="px-5 py-3.5 text-sm font-semibold text-jade-50 whitespace-nowrap">{formatNGN(c.amountNGN)}</td>
+                        <td className="px-5 py-3.5 text-sm text-jade-50/80 whitespace-nowrap">{formatRMB(c.amountRMB)}</td>
+                        <td className="px-5 py-3.5 text-sm text-jade-warm/60">{c.rateUsed ?? '—'}</td>
+                        <td className="px-5 py-3.5">
                           <div className="space-y-1">
                             <Badge
                               status={c.receivingMethod}
                               label={c.receivingMethod === 'bank_transfer' ? 'Bank' : 'Alipay'}
                             />
                             {c.receivingMethod === 'alipay' && c.alipayId && (
-                              <p className="text-xs text-jade-700 font-mono">{c.alipayId}</p>
+                              <p className="text-xs text-jade-700/60 font-mono">{c.alipayId}</p>
                             )}
                             {c.receivingMethod === 'bank_transfer' && c.bankCardDisplay && (
-                              <p className="text-xs text-jade-700 font-mono">{c.bankCardDisplay}</p>
+                              <p className="text-xs text-jade-700/60 font-mono">{c.bankCardDisplay}</p>
                             )}
                           </div>
                         </td>
-                        <td className="px-4 py-3 text-sm text-jade-warm whitespace-nowrap">
+                        <td className="px-5 py-3.5 text-sm text-jade-warm/60 whitespace-nowrap">
                           {c.createdAt ? new Date(c.createdAt).toLocaleString() : '—'}
                         </td>
-                        <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
+                        <td className="px-5 py-3.5" onClick={(e) => e.stopPropagation()}>
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => setActionState({ conversion: c, type: 'complete' })}
-                              className="px-3 py-1.5 bg-green-500/20 hover:bg-green-500/30 text-green-400 text-xs font-semibold rounded-lg transition-colors"
+                              className="px-3 py-1.5 bg-green-500/15 hover:bg-green-500/25 text-green-400 text-xs font-semibold rounded-lg transition-all"
                             >
                               Complete
                             </button>
                             <button
                               onClick={() => setActionState({ conversion: c, type: 'fail' })}
-                              className="px-3 py-1.5 bg-red-500/20 hover:bg-red-500/30 text-red-400 text-xs font-semibold rounded-lg transition-colors"
+                              className="px-3 py-1.5 bg-red-500/15 hover:bg-red-500/25 text-red-400 text-xs font-semibold rounded-lg transition-all"
                             >
                               Fail
                             </button>

@@ -42,156 +42,85 @@ export default function Agents() {
     onboardMutation.mutate(form)
   }
 
+  const inputCls = "w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 transition-all"
+  const thCls = "px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider"
+
   return (
     <div className="space-y-5">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-jade-50">Agents</h1>
-          <p className="text-jade-warm text-sm mt-0.5">Manage Jadegate agents and their profiles</p>
+          <h1 className="text-2xl font-bold text-jade-50 tracking-tight">Agents</h1>
+          <p className="text-jade-warm/60 text-sm mt-1">Manage Jadegate agents and their profiles</p>
         </div>
-        <button
-          onClick={() => setModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2 bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-lg text-sm transition-colors"
-        >
-          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-          </svg>
+        <button onClick={() => setModalOpen(true)} className="flex items-center gap-2 px-4 py-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-xl text-sm transition-all hover:shadow-lg hover:shadow-jade-400/20">
+          <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
           Onboard Agent
         </button>
       </div>
 
-      {/* Table */}
-      <div className="bg-jade-800 border border-jade-700/40 rounded-xl overflow-hidden">
-        {isError ? (
-          <ErrorState message="Failed to load agents" onRetry={refetch} />
-        ) : (
+      <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
+        {isError ? <ErrorState message="Failed to load agents" onRetry={refetch} /> : (
           <>
             <div className="overflow-x-auto">
               <table className="w-full">
-                <thead>
-                  <tr className="border-b border-jade-700/40">
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Agent</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Location</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Expertise</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Bio</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Verified</th>
-                    <th className="px-4 py-3 text-left text-xs font-semibold text-jade-warm uppercase tracking-wider">Joined</th>
-                  </tr>
-                </thead>
+                <thead><tr className="border-b border-jade-700/25">
+                  <th className={thCls}>Agent</th><th className={thCls}>Location</th><th className={thCls}>Expertise</th>
+                  <th className={thCls}>Bio</th><th className={thCls}>Verified</th><th className={thCls}>Joined</th>
+                </tr></thead>
                 <tbody>
-                  {isLoading ? (
-                    <SkeletonTable rows={6} cols={6} />
-                  ) : agents.length === 0 ? (
-                    <tr>
-                      <td colSpan={6} className="px-4 py-12 text-center text-jade-700">No agents found</td>
-                    </tr>
-                  ) : (
-                    agents.map((a) => (
-                      <tr key={a._id} className="border-b border-jade-700/40 hover:bg-jade-700/20 transition-colors">
-                        <td className="px-4 py-3">
-                          <div>
-                            <p className="text-sm font-medium text-jade-50">
-                              {a.user?.fullName ?? '—'}
-                            </p>
-                            <p className="text-xs text-jade-700">{a.user?.email}</p>
+                  {isLoading ? <SkeletonTable rows={6} cols={6} /> : agents.length === 0 ? (
+                    <tr><td colSpan={6} className="px-5 py-16 text-center text-jade-700/60">No agents found</td></tr>
+                  ) : agents.map((a) => (
+                    <tr key={a._id} className="border-b border-jade-700/15 hover:bg-jade-700/10 transition-colors">
+                      <td className="px-5 py-3.5">
+                        <div className="flex items-center gap-3">
+                          <div className="w-8 h-8 rounded-full bg-jade-700/25 flex items-center justify-center shrink-0 text-jade-400 font-semibold text-xs">
+                            {a.user?.fullName ? a.user.fullName.split(' ').map(n=>n[0]).join('').slice(0,2).toUpperCase() : '—'}
                           </div>
-                        </td>
-                        <td className="px-4 py-3 text-sm text-jade-50/80">{a.location ?? '—'}</td>
-                        <td className="px-4 py-3 text-sm text-jade-50/80">{a.expertise ?? '—'}</td>
-                        <td className="px-4 py-3">
-                          <p className="text-sm text-jade-warm max-w-xs truncate">{a.bio ?? '—'}</p>
-                        </td>
-                        <td className="px-4 py-3">
-                          <Badge
-                            status={a.isVerified ? 'verified' : 'unverified'}
-                            label={a.isVerified ? 'Verified' : 'Unverified'}
-                          />
-                        </td>
-                        <td className="px-4 py-3 text-sm text-jade-warm whitespace-nowrap">
-                          {a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '—'}
-                        </td>
-                      </tr>
-                    ))
-                  )}
+                          <div>
+                            <p className="text-sm font-medium text-jade-50">{a.user?.fullName ?? '—'}</p>
+                            <p className="text-xs text-jade-700/70">{a.user?.email}</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="px-5 py-3.5 text-sm text-jade-50/70">{a.location ?? '—'}</td>
+                      <td className="px-5 py-3.5 text-sm text-jade-50/70">{a.expertise ?? '—'}</td>
+                      <td className="px-5 py-3.5"><p className="text-sm text-jade-warm/60 max-w-xs truncate">{a.bio ?? '—'}</p></td>
+                      <td className="px-5 py-3.5"><Badge status={a.isVerified ? 'verified' : 'unverified'} label={a.isVerified ? 'Verified' : 'Unverified'} /></td>
+                      <td className="px-5 py-3.5 text-sm text-jade-warm/60 whitespace-nowrap">{a.createdAt ? new Date(a.createdAt).toLocaleDateString() : '—'}</td>
+                    </tr>
+                  ))}
                 </tbody>
               </table>
             </div>
-            <Pagination
-              page={pagination.page}
-              pages={pagination.pages}
-              total={pagination.total}
-              limit={pagination.limit}
-              onPage={(p) => setPage(p)}
-            />
+            <Pagination page={pagination.page} pages={pagination.pages} total={pagination.total} limit={pagination.limit} onPage={(p) => setPage(p)} />
           </>
         )}
       </div>
 
-      {/* Onboard Modal */}
       <Modal isOpen={modalOpen} onClose={() => { setModalOpen(false); setForm(initialForm) }} title="Onboard New Agent" size="md">
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-jade-50/80 mb-1.5">User ID *</label>
-            <input
-              type="text"
-              required
-              value={form.userId}
-              onChange={(e) => setForm((f) => ({ ...f, userId: e.target.value }))}
-              placeholder="MongoDB user ObjectId"
-              className="w-full bg-jade-900 border border-jade-700/40 text-jade-50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/50 focus:border-jade-400/50 placeholder-jade-700 font-mono"
-            />
-            <p className="text-xs text-jade-700 mt-1">The user must already have a registered account</p>
+            <label className="block text-[13px] font-medium text-jade-50/70 mb-2">User ID *</label>
+            <input type="text" required value={form.userId} onChange={(e) => setForm((f) => ({ ...f, userId: e.target.value }))} placeholder="MongoDB user ObjectId" className={`${inputCls} font-mono`} />
+            <p className="text-xs text-jade-700/50 mt-1.5">The user must already have a registered account</p>
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-jade-50/80 mb-1.5">Location</label>
-            <input
-              type="text"
-              value={form.location}
-              onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))}
-              placeholder="e.g. Lagos, Nigeria"
-              className="w-full bg-jade-900 border border-jade-700/40 text-jade-50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/50 focus:border-jade-400/50 placeholder-jade-700"
-            />
+            <label className="block text-[13px] font-medium text-jade-50/70 mb-2">Location</label>
+            <input type="text" value={form.location} onChange={(e) => setForm((f) => ({ ...f, location: e.target.value }))} placeholder="e.g. Lagos, Nigeria" className={inputCls} />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-jade-50/80 mb-1.5">Expertise</label>
-            <input
-              type="text"
-              value={form.expertise}
-              onChange={(e) => setForm((f) => ({ ...f, expertise: e.target.value }))}
-              placeholder="e.g. Currency Exchange, SME Imports"
-              className="w-full bg-jade-900 border border-jade-700/40 text-jade-50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/50 focus:border-jade-400/50 placeholder-jade-700"
-            />
+            <label className="block text-[13px] font-medium text-jade-50/70 mb-2">Expertise</label>
+            <input type="text" value={form.expertise} onChange={(e) => setForm((f) => ({ ...f, expertise: e.target.value }))} placeholder="e.g. Currency Exchange, SME Imports" className={inputCls} />
           </div>
-
           <div>
-            <label className="block text-sm font-medium text-jade-50/80 mb-1.5">Bio</label>
-            <textarea
-              rows={3}
-              value={form.bio}
-              onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))}
-              placeholder="Short bio about this agent..."
-              className="w-full bg-jade-900 border border-jade-700/40 text-jade-50 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/50 focus:border-jade-400/50 placeholder-jade-700 resize-none"
-            />
+            <label className="block text-[13px] font-medium text-jade-50/70 mb-2">Bio</label>
+            <textarea rows={3} value={form.bio} onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))} placeholder="Short bio about this agent..." className={`${inputCls} resize-none`} />
           </div>
-
           <div className="flex gap-3 pt-2">
-            <button
-              type="button"
-              onClick={() => { setModalOpen(false); setForm(initialForm) }}
-              className="flex-1 px-4 py-2.5 bg-jade-700/20 hover:bg-jade-700/30 text-jade-50 text-sm font-medium rounded-lg transition-colors"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={onboardMutation.isPending}
-              className="flex-1 px-4 py-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 text-sm font-semibold rounded-lg transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
-            >
-              {onboardMutation.isPending ? (
-                <span className="w-4 h-4 border-2 border-jade-900/30 border-t-jade-900 rounded-full animate-spin" />
-              ) : 'Onboard Agent'}
+            <button type="button" onClick={() => { setModalOpen(false); setForm(initialForm) }} className="flex-1 px-4 py-2.5 bg-jade-700/15 hover:bg-jade-700/25 text-jade-50 text-sm font-medium rounded-xl transition-all">Cancel</button>
+            <button type="submit" disabled={onboardMutation.isPending} className="flex-1 px-4 py-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 text-sm font-semibold rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+              {onboardMutation.isPending ? <span className="w-4 h-4 border-2 border-jade-900/30 border-t-jade-900 rounded-full animate-spin" /> : 'Onboard Agent'}
             </button>
           </div>
         </form>
