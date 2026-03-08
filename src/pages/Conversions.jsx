@@ -143,7 +143,7 @@ export default function Conversions() {
                         <td className="px-4 py-3">
                           <Badge
                             status={c.receivingMethod}
-                            label={c.receivingMethod === 'bank_transfer' ? 'Bank' : 'Alipay'}
+                            label={c.receivingMethod === 'chinese_bank' ? 'Chinese Bank' : 'Alipay'}
                           />
                         </td>
                         <td className="px-4 py-3">

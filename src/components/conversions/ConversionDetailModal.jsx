@@ -63,16 +63,16 @@ export default function ConversionDetailModal({ conversion, onClose }) {
           <p className="text-xs font-semibold text-jade-700 uppercase tracking-wider mb-2">Receiving Method</p>
           <dl>
             <Row label="Method" value={
-              <Badge status={c.receivingMethod} label={c.receivingMethod === 'bank_transfer' ? 'Bank Transfer' : 'Alipay'} />
+              <Badge status={c.receivingMethod} label={c.receivingMethod === 'chinese_bank' ? 'Chinese Bank Transfer' : 'Alipay'} />
             } />
             {c.receivingMethod === 'alipay' && (
-              <Row label="Alipay ID" value={c.alipayId} />
+              <Row label="Alipay Contact" value={c.alipayContact} />
             )}
-            {c.receivingMethod === 'bank_transfer' && (
+            {c.receivingMethod === 'chinese_bank' && (
               <>
+                <Row label="Recipient Name" value={c.bankRecipientName} />
                 <Row label="Bank Name" value={c.bankName} />
-                <Row label="Card (last 4)" value={c.bankCardDisplay} />
-                <Row label="Account Holder" value={c.accountHolderName} />
+                <Row label="Card Number" value={c.bankCardDisplay} />
               </>
             )}
           </dl>
