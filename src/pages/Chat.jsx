@@ -55,6 +55,16 @@ export default function Chat() {
       }
       queryClient.invalidateQueries({ queryKey: ['chatSessions'] })
     })
+    socket.on('message_sent', (message) => {
+      const sid = message.sessionId ?? message.session
+      if (sid === activeSessionRef.current?._id) {
+        setMessages((prev) => {
+          if (prev.some((m) => m._id === message._id)) return prev
+          return [...prev, message]
+        })
+      }
+      queryClient.invalidateQueries({ queryKey: ['chatSessions'] })
+    })
     socket.on('message_read', ({ messageId }) => {
       setMessages((prev) => prev.map((m) => (m._id === messageId ? { ...m, isRead: true } : m)))
     })

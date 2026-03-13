@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
     getMe()
       .then(({ data }) => {
         const userData = data.data
-        if (data.success && userData?._id) {
+        if (data.success && userData?._id && userData.role === 'admin') {
           setUser(userData)
         } else {
           localStorage.removeItem('accessToken')
@@ -41,7 +41,7 @@ export function AuthProvider({ children }) {
     const refreshToken = data.refreshToken
 
     if (!accessToken || !userData) throw new Error('Login failed')
-    if (userData.role && userData.role !== 'admin') {
+    if (userData.role !== 'admin') {
       throw new Error('Access denied. Admins only.')
     }
 
