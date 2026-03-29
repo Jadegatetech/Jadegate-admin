@@ -23,11 +23,13 @@ export function AuthProvider({ children }) {
         } else {
           localStorage.removeItem('accessToken')
           localStorage.removeItem('refreshToken')
+          localStorage.removeItem('sessionId')
         }
       })
       .catch(() => {
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
+        localStorage.removeItem('sessionId')
       })
       .finally(() => setLoading(false))
   }, [])
@@ -47,6 +49,7 @@ export function AuthProvider({ children }) {
 
     localStorage.setItem('accessToken', accessToken)
     if (refreshToken) localStorage.setItem('refreshToken', refreshToken)
+    if (data.sessionId) localStorage.setItem('sessionId', data.sessionId)
     setUser(userData)
     return userData
   }, [])
@@ -59,6 +62,7 @@ export function AuthProvider({ children }) {
     }
     localStorage.removeItem('accessToken')
     localStorage.removeItem('refreshToken')
+    localStorage.removeItem('sessionId')
     setUser(null)
     toast.success('Logged out successfully')
   }, [])

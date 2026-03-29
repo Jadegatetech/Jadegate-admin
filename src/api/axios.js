@@ -13,6 +13,10 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`
   }
+  const sessionId = localStorage.getItem('sessionId')
+  if (sessionId) {
+    config.headers['x-session-id'] = sessionId
+  }
   return config
 })
 
@@ -57,6 +61,7 @@ api.interceptors.response.use(
         isRefreshing = false
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
+        localStorage.removeItem('sessionId')
         window.location.href = '/login'
         return Promise.reject(error)
       }
@@ -82,6 +87,7 @@ api.interceptors.response.use(
         processQueue(refreshError, null)
         localStorage.removeItem('accessToken')
         localStorage.removeItem('refreshToken')
+        localStorage.removeItem('sessionId')
         window.location.href = '/login'
         return Promise.reject(refreshError)
       } finally {
