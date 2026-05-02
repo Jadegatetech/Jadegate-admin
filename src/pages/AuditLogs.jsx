@@ -37,30 +37,31 @@ export default function AuditLogs() {
 
   const logs = data?.data ?? []
   const pagination = data?.pagination ?? {}
-  const thCls = "px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider"
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-2xl font-bold text-jade-50 tracking-tight">Audit Logs</h1>
-        <p className="text-jade-warm/60 text-sm mt-1">Immutable record of all admin actions</p>
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">Audit Logs</h1>
+          <p className="page-subtitle">Immutable record of all admin actions</p>
+        </div>
       </div>
 
-      <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
+      <div className="table-shell">
         {isError ? <ErrorState message="Failed to load audit logs" onRetry={refetch} /> : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead><tr className="border-b border-jade-700/25">
-                  <th className={thCls}>Admin</th><th className={thCls}>Action</th><th className={thCls}>Resource</th>
-                  <th className={thCls}>Resource ID</th><th className={thCls}>IP Address</th><th className={thCls}>Date</th>
-                  <th className={`${thCls} text-right`}>Details</th>
+            <div className="table-scroll">
+              <table className="data-table">
+                <thead><tr>
+                  <th>Admin</th><th>Action</th><th>Resource</th>
+                  <th>Resource ID</th><th>IP Address</th><th>Date</th>
+                  <th className="text-right">Details</th>
                 </tr></thead>
                 <tbody>
                   {isLoading ? <SkeletonTable rows={8} cols={7} /> : logs.length === 0 ? (
                     <tr><td colSpan={7} className="px-5 py-16 text-center text-jade-700/60">No audit logs found</td></tr>
                   ) : logs.map((log) => (
-                    <tr key={log._id} className="border-b border-jade-700/15 hover:bg-jade-700/10 transition-colors">
+                    <tr key={log._id}>
                       <td className="px-5 py-3.5">
                         <div>
                           <p className="text-sm font-medium text-jade-50">{log.adminId?.fullName ?? '—'}</p>
@@ -76,7 +77,7 @@ export default function AuditLogs() {
                       <td className="px-5 py-3.5 text-sm text-jade-warm/60 whitespace-nowrap">{log.createdAt ? new Date(log.createdAt).toLocaleString() : '—'}</td>
                       <td className="px-5 py-3.5 text-right">
                         {log.changes && Object.keys(log.changes).length > 0 && (
-                          <button onClick={() => setSelectedLog(log)} className="text-xs text-jade-400 hover:text-jade-500 transition-colors font-medium">View changes</button>
+                          <button onClick={() => setSelectedLog(log)} className="btn btn-sm btn-secondary text-jade-400">View changes</button>
                         )}
                       </td>
                     </tr>

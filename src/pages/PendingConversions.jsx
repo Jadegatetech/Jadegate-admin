@@ -68,23 +68,23 @@ export default function PendingConversions() {
   return (
     <div className="space-y-5">
       {/* Header */}
-      <div className="flex items-start justify-between">
+      <div className="page-header">
         <div>
           <div className="flex items-center gap-3">
-            <h1 className="text-2xl font-bold text-jade-50 tracking-tight">Pending Conversions</h1>
+            <h1 className="page-title">Pending Conversions</h1>
             {totalPending > 0 && (
               <span className="bg-jade-400 text-jade-900 text-sm font-bold px-2.5 py-1 rounded-full">
                 {totalPending}
               </span>
             )}
           </div>
-          <p className="text-jade-warm/60 text-sm mt-1">
+          <p className="page-subtitle">
             Oldest conversions first — review and take action
           </p>
         </div>
         <button
           onClick={() => refetch()}
-          className="flex items-center gap-2 px-3.5 py-2 bg-jade-700/15 hover:bg-jade-700/25 text-jade-50 text-sm rounded-xl transition-all hover:-translate-y-0.5"
+          className="btn btn-secondary"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2}
@@ -110,22 +110,22 @@ export default function PendingConversions() {
       )}
 
       {/* Table */}
-      <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
+      <div className="table-shell">
         {isError ? (
           <ErrorState message="Failed to load pending conversions" onRetry={refetch} />
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full">
+            <div className="table-scroll">
+              <table className="data-table">
                 <thead>
-                  <tr className="border-b border-jade-700/25">
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">User</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">NGN Amount</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">RMB Amount</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Rate</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Method</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Submitted</th>
-                    <th className="px-5 py-3.5 text-right text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Actions</th>
+                  <tr>
+                    <th>User</th>
+                    <th>NGN Amount</th>
+                    <th>RMB Amount</th>
+                    <th>Rate</th>
+                    <th>Method</th>
+                    <th>Submitted</th>
+                    <th className="text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -150,7 +150,7 @@ export default function PendingConversions() {
                       <tr
                         key={c._id}
                         onClick={() => setSelectedConversion(c)}
-                        className="border-b border-jade-700/15 hover:bg-jade-700/10 cursor-pointer transition-colors"
+                        className="cursor-pointer"
                       >
                         <td className="px-5 py-3.5">
                           <div>
@@ -182,13 +182,13 @@ export default function PendingConversions() {
                           <div className="flex items-center justify-end gap-1.5">
                             <button
                               onClick={() => setActionState({ conversion: c, type: 'complete' })}
-                              className="px-3 py-1.5 bg-green-500/15 hover:bg-green-500/25 text-green-400 text-xs font-semibold rounded-lg transition-all"
+                              className="btn btn-sm btn-success"
                             >
                               Complete
                             </button>
                             <button
                               onClick={() => setActionState({ conversion: c, type: 'fail' })}
-                              className="px-3 py-1.5 bg-red-500/15 hover:bg-red-500/25 text-red-400 text-xs font-semibold rounded-lg transition-all"
+                              className="btn btn-sm btn-danger"
                             >
                               Fail
                             </button>

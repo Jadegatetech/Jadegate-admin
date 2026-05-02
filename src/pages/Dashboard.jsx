@@ -119,14 +119,14 @@ export default function Dashboard() {
   return (
     <div className="space-y-6">
       {/* Header */}
-      <div className="flex items-center justify-between">
+      <div className="page-header">
         <div>
-          <h1 className="text-2xl font-bold text-jade-50 tracking-tight">{getGreeting()} 👋</h1>
-          <p className="text-jade-warm/60 text-sm mt-1">Here's what's happening with Jadegate today</p>
+          <h1 className="page-title">{getGreeting()}</h1>
+          <p className="page-subtitle">Here's what's happening with Jadegate today</p>
         </div>
         <Link
           to="/conversions/pending"
-          className="flex items-center gap-2 px-4 py-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-xl text-sm transition-all hover:shadow-lg hover:shadow-jade-400/20"
+          className="btn btn-primary"
         >
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -162,7 +162,7 @@ export default function Dashboard() {
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Volume Chart */}
-        <div className="xl:col-span-2 bg-jade-800 border border-jade-700/20 rounded-2xl p-6">
+        <div className="xl:col-span-2 surface-card p-4 sm:p-6">
           <h2 className="text-[15px] font-semibold text-jade-50 mb-5">Conversion Activity</h2>
           {statsLoading ? (
             <div className="h-64 skeleton-shimmer rounded-xl" />
@@ -183,11 +183,11 @@ export default function Dashboard() {
         {/* Right column */}
         <div className="space-y-4">
           {/* Active Rate Card */}
-          <div className="bg-jade-800 border border-jade-700/20 rounded-2xl p-5">
+          <div className="surface-card">
             <div className="flex items-center justify-between mb-3">
               <h2 className="text-[15px] font-semibold text-jade-50">Active Exchange Rate</h2>
               <Link to="/exchange-rate" className="text-xs text-jade-400 hover:text-jade-500 transition-colors font-medium">
-                Manage →
+                Manage
               </Link>
             </div>
             {rateLoading ? (
@@ -213,7 +213,7 @@ export default function Dashboard() {
           </div>
 
           {/* RMB Volume */}
-          <div className="bg-jade-800 border border-jade-700/20 rounded-2xl p-5">
+          <div className="surface-card">
             <p className="text-[13px] text-jade-warm/80 font-medium">Total RMB Volume</p>
             <p className="text-2xl font-bold text-jade-50 mt-3 tracking-tight">
               {statsLoading ? '—' : formatRMB(stats.totalVolumeRMB)}
@@ -222,7 +222,7 @@ export default function Dashboard() {
           </div>
 
           {/* Quick actions */}
-          <div className="bg-jade-800 border border-jade-700/20 rounded-2xl p-5">
+          <div className="surface-card">
             <p className="text-[13px] font-semibold text-jade-50 mb-3">Quick Actions</p>
             <div className="space-y-2">
               <Link

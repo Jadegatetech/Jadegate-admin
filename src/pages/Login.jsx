@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useNavigate, Navigate } from 'react-router-dom'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 import toast from 'react-hot-toast'
 import jadeLogo from '../assets/Jade 1.1.png'
 
@@ -32,14 +32,7 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-jade-900 flex items-center justify-center p-4">
-      {/* Background decoration */}
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-jade-400/5 rounded-full blur-[100px]" />
-        <div className="absolute -bottom-40 -left-40 w-[500px] h-[500px] bg-jade-700/8 rounded-full blur-[100px]" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-jade-400/[0.02] rounded-full blur-[120px]" />
-      </div>
-
+    <div className="min-h-screen app-shell flex items-center justify-center p-4">
       <div className="relative w-full max-w-[420px] animate-fade-in-up">
         {/* Logo */}
         <div className="text-center mb-8">
@@ -51,7 +44,7 @@ export default function Login() {
         </div>
 
         {/* Card */}
-        <div className="bg-jade-800/70 backdrop-blur-xl rounded-2xl border border-jade-700/25 p-8 shadow-2xl shadow-black/30">
+        <div className="surface-card p-6 sm:p-8">
           <form onSubmit={handleSubmit} className="space-y-5">
             <div>
               <label className="block text-[13px] font-medium text-jade-50/70 mb-2">
@@ -64,7 +57,7 @@ export default function Login() {
                 value={form.email}
                 onChange={(e) => setForm((f) => ({ ...f, email: e.target.value }))}
                 placeholder="admin@jadegate.com"
-                className="w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 transition-all"
+                className="form-field"
               />
             </div>
 
@@ -79,7 +72,7 @@ export default function Login() {
                   value={form.password}
                   onChange={(e) => setForm((f) => ({ ...f, password: e.target.value }))}
                   placeholder="••••••••"
-                  className="w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-4 py-3 pr-11 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 transition-all"
+                  className="form-field pr-11"
                 />
                 <button
                   type="button"
@@ -117,7 +110,7 @@ export default function Login() {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-xl py-3 text-sm transition-all disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-jade-400/20"
+                className="w-full btn btn-primary disabled:opacity-60 disabled:cursor-not-allowed"
               >
                 {submitting ? (
                   <>

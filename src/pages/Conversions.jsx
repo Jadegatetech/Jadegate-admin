@@ -73,18 +73,20 @@ export default function Conversions() {
 
   return (
     <div className="space-y-5">
-      <div>
-        <h1 className="text-2xl font-bold text-jade-50 tracking-tight">All Conversions</h1>
-        <p className="text-jade-warm/60 text-sm mt-1">Browse and manage all conversion transactions</p>
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">All Conversions</h1>
+          <p className="page-subtitle">Browse and manage all conversion transactions</p>
+        </div>
       </div>
 
       {/* Status filter tabs */}
-      <div className="flex gap-1 p-1 bg-jade-800/80 rounded-xl w-fit flex-wrap border border-jade-700/15">
+      <div className="segmented-control">
         {STATUSES.map((s) => (
           <button
             key={s}
             onClick={() => { setStatusFilter(s); setPage(1) }}
-            className={`px-3.5 py-1.5 rounded-lg text-[13px] font-medium capitalize transition-all ${
+            className={`px-3.5 py-2 rounded-lg text-[13px] font-semibold capitalize transition-all ${
               statusFilter === s
                 ? 'bg-jade-400 text-jade-900 shadow-sm shadow-jade-400/20'
                 : 'text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15'
@@ -96,23 +98,23 @@ export default function Conversions() {
       </div>
 
       {/* Table */}
-      <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
+      <div className="table-shell">
         {isError ? (
           <ErrorState message="Failed to load conversions" onRetry={refetch} />
         ) : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full">
+            <div className="table-scroll">
+              <table className="data-table">
                 <thead>
-                  <tr className="border-b border-jade-700/25">
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">User</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">NGN</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">RMB</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Rate</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Method</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Status</th>
-                    <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Date</th>
-                    <th className="px-5 py-3.5 text-right text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Actions</th>
+                  <tr>
+                    <th>User</th>
+                    <th>NGN</th>
+                    <th>RMB</th>
+                    <th>Rate</th>
+                    <th>Method</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th className="text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -129,7 +131,7 @@ export default function Conversions() {
                       <tr
                         key={c._id}
                         onClick={() => setSelectedConversion(c)}
-                        className="border-b border-jade-700/15 hover:bg-jade-700/10 cursor-pointer transition-colors group"
+                        className="cursor-pointer group"
                       >
                         <td className="px-5 py-3.5">
                           <div>
@@ -157,13 +159,13 @@ export default function Conversions() {
                             <div className="flex items-center justify-end gap-1.5">
                               <button
                                 onClick={() => setActionState({ conversion: c, type: 'complete' })}
-                                className="px-2.5 py-1.5 bg-green-500/15 hover:bg-green-500/25 text-green-400 text-xs font-medium rounded-lg transition-all"
+                                className="btn btn-sm btn-success"
                               >
                                 Complete
                               </button>
                               <button
                                 onClick={() => setActionState({ conversion: c, type: 'fail' })}
-                                className="px-2.5 py-1.5 bg-red-500/15 hover:bg-red-500/25 text-red-400 text-xs font-medium rounded-lg transition-all"
+                                className="btn btn-sm btn-danger"
                               >
                                 Fail
                               </button>

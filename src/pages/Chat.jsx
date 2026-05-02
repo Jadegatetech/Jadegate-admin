@@ -3,7 +3,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { io } from 'socket.io-client'
 import toast from 'react-hot-toast'
 import { getSessions, getMessages, uploadImage, closeSession, reopenSession } from '../api/chat'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from '../context/useAuth'
 
 const SOCKET_URL = 'https://jadegate-backend.onrender.com'
 
@@ -131,9 +131,9 @@ export default function Chat() {
   })
 
   return (
-    <div className="flex h-[calc(100vh-64px)] -m-4 md:-m-6 lg:-m-8 overflow-hidden rounded-none">
+    <div className="flex h-[calc(100vh-88px)] sm:h-[calc(100vh-96px)] md:h-[calc(100vh-112px)] -m-3 sm:-m-4 md:-m-6 lg:-m-8 overflow-hidden rounded-none">
       {/* Left panel: inbox */}
-      <div className="w-80 shrink-0 flex flex-col bg-jade-800 border-r border-jade-700/15">
+      <div className={`${activeSession ? 'hidden md:flex' : 'flex'} w-full md:w-80 shrink-0 flex-col bg-jade-800 border-r border-jade-700/15`}>
         <div className="px-4 py-4 border-b border-jade-700/15 shrink-0">
           <div className="flex items-center justify-between">
             <h1 className="text-[15px] font-bold text-jade-50">Support Inbox</h1>
@@ -188,8 +188,17 @@ export default function Chat() {
       {/* Right panel: conversation */}
       {activeSession ? (
         <div className="flex-1 flex flex-col min-w-0 bg-jade-900">
-          <div className="px-5 py-3 border-b border-jade-700/15 bg-jade-800 flex items-center justify-between shrink-0">
+          <div className="px-3 sm:px-5 py-3 border-b border-jade-700/15 bg-jade-800 flex items-center justify-between shrink-0">
             <div className="flex items-center gap-3 min-w-0">
+              <button
+                onClick={() => setActiveSession(null)}
+                className="md:hidden p-2 -ml-1 rounded-lg text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15"
+                aria-label="Back to inbox"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
               <div className="w-9 h-9 rounded-full bg-jade-700/30 flex items-center justify-center shrink-0 text-jade-400 font-semibold text-xs">
                 {initials(activeSession.user?.fullName ?? activeSession.user?.username)}
               </div>
@@ -198,17 +207,19 @@ export default function Chat() {
                 <p className="text-xs text-jade-700/60 truncate">{activeSession.topic ?? 'Support request'}{activeSession.agent && <span> · {activeSession.agent.fullName ?? activeSession.agent.username}</span>}</p>
               </div>
             </div>
-            <div className="flex items-center gap-2 shrink-0 ml-4">
+            <div className="flex items-center gap-2 shrink-0 ml-3">
               <span className={`text-[11px] px-2.5 py-1 rounded-lg font-medium ${activeSession.status === 'open' ? 'bg-green-400/12 text-green-400' : 'bg-slate-400/12 text-slate-400'}`}>{activeSession.status}</span>
               {activeSession.status === 'open' ? (
-                <button onClick={() => closeMutation.mutate()} disabled={closeMutation.isPending} className="px-3 py-1.5 bg-red-500/15 hover:bg-red-500/25 text-red-400 text-xs font-medium rounded-lg transition-all disabled:opacity-50">Close ticket</button>
+                <button onClick={() => closeMutation.mutate()} disabled={closeMutation.isPending} className="btn btn-sm btn-danger disabled:opacity-50">
+                  <span className="sm:hidden">Close</span><span className="hidden sm:inline">Close ticket</span>
+                </button>
               ) : (
-                <button onClick={() => reopenMutation.mutate()} disabled={reopenMutation.isPending} className="px-3 py-1.5 bg-jade-400/12 hover:bg-jade-400/20 text-jade-400 text-xs font-medium rounded-lg transition-all disabled:opacity-50">Reopen</button>
+                <button onClick={() => reopenMutation.mutate()} disabled={reopenMutation.isPending} className="btn btn-sm btn-secondary text-jade-400 disabled:opacity-50">Reopen</button>
               )}
             </div>
           </div>
 
-          <div className="flex-1 overflow-y-auto px-5 py-4 space-y-3">
+          <div className="flex-1 overflow-y-auto px-3 sm:px-5 py-4 space-y-3">
             {messagesLoading ? (
               <div className="space-y-3 pt-4">
                 {[...Array(5)].map((_, i) => (
@@ -223,7 +234,7 @@ export default function Chat() {
               const isOwn = msg.sender?._id === user?._id || msg.sender?.role === 'admin'
               return (
                 <div key={msg._id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
-                  <div className="max-w-[70%]">
+                  <div className="max-w-[86%] sm:max-w-[70%]">
                     {!isOwn && <p className="text-[11px] text-jade-700/50 mb-1 ml-1">{msg.sender?.fullName ?? msg.sender?.username ?? 'User'}</p>}
                     <div className={`rounded-2xl px-4 py-2.5 ${isOwn ? 'bg-jade-400 text-jade-900 rounded-br-md' : 'bg-jade-800 text-jade-50 rounded-bl-md border border-jade-700/15'}`}>
                       {msg.imageUrl && <img src={msg.imageUrl} alt="attachment" className="rounded-xl max-w-full mb-2 max-h-48 object-cover cursor-pointer" onClick={() => window.open(msg.imageUrl, '_blank')} />}
@@ -240,7 +251,7 @@ export default function Chat() {
           </div>
 
           {activeSession.status === 'open' && (
-            <div className="px-4 py-3 border-t border-jade-700/15 bg-jade-800 shrink-0">
+            <div className="px-3 sm:px-4 py-3 border-t border-jade-700/15 bg-jade-800 shrink-0">
               {imageUrl && (
                 <div className="flex items-center gap-2 mb-2 p-2 bg-jade-900/60 rounded-xl border border-jade-700/10">
                   <img src={imageUrl} alt="preview" className="h-10 w-10 object-cover rounded-lg" />
@@ -261,7 +272,7 @@ export default function Chat() {
                   className="flex-1 bg-jade-900/80 border border-jade-700/25 text-jade-50 rounded-xl px-4 py-2.5 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/50 transition-all"
                   style={{ maxHeight: '120px', overflowY: 'auto' }} />
                 <button onClick={handleSend} disabled={!text.trim() && !imageUrl}
-                  className="p-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 rounded-xl transition-all disabled:opacity-30 shrink-0">
+                  className="p-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 rounded-lg transition-all disabled:opacity-30 shrink-0">
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
                 </button>
               </div>
@@ -269,7 +280,7 @@ export default function Chat() {
           )}
         </div>
       ) : (
-        <div className="flex-1 flex items-center justify-center bg-jade-900">
+        <div className="hidden md:flex flex-1 items-center justify-center bg-jade-900">
           <div className="text-center">
             <div className="w-16 h-16 rounded-2xl bg-jade-800 border border-jade-700/20 flex items-center justify-center mx-auto mb-4">
               <svg className="w-8 h-8 text-jade-700/50" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>

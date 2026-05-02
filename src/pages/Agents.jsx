@@ -42,36 +42,35 @@ export default function Agents() {
     onboardMutation.mutate(form)
   }
 
-  const inputCls = "w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 transition-all"
-  const thCls = "px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider"
+  const inputCls = "form-field"
 
   return (
     <div className="space-y-5">
-      <div className="flex items-center justify-between">
+      <div className="page-header">
         <div>
-          <h1 className="text-2xl font-bold text-jade-50 tracking-tight">Agents</h1>
-          <p className="text-jade-warm/60 text-sm mt-1">Manage Jadegate agents and their profiles</p>
+          <h1 className="page-title">Agents</h1>
+          <p className="page-subtitle">Manage Jadegate agents and their profiles</p>
         </div>
-        <button onClick={() => setModalOpen(true)} className="flex items-center gap-2 px-4 py-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-xl text-sm transition-all hover:shadow-lg hover:shadow-jade-400/20">
+        <button onClick={() => setModalOpen(true)} className="btn btn-primary">
           <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" /></svg>
           Onboard Agent
         </button>
       </div>
 
-      <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
+      <div className="table-shell">
         {isError ? <ErrorState message="Failed to load agents" onRetry={refetch} /> : (
           <>
-            <div className="overflow-x-auto">
-              <table className="w-full">
-                <thead><tr className="border-b border-jade-700/25">
-                  <th className={thCls}>Agent</th><th className={thCls}>Location</th><th className={thCls}>Expertise</th>
-                  <th className={thCls}>Bio</th><th className={thCls}>Verified</th><th className={thCls}>Joined</th>
+            <div className="table-scroll">
+              <table className="data-table">
+                <thead><tr>
+                  <th>Agent</th><th>Location</th><th>Expertise</th>
+                  <th>Bio</th><th>Verified</th><th>Joined</th>
                 </tr></thead>
                 <tbody>
                   {isLoading ? <SkeletonTable rows={6} cols={6} /> : agents.length === 0 ? (
                     <tr><td colSpan={6} className="px-5 py-16 text-center text-jade-700/60">No agents found</td></tr>
                   ) : agents.map((a) => (
-                    <tr key={a._id} className="border-b border-jade-700/15 hover:bg-jade-700/10 transition-colors">
+                    <tr key={a._id}>
                       <td className="px-5 py-3.5">
                         <div className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded-full bg-jade-700/25 flex items-center justify-center shrink-0 text-jade-400 font-semibold text-xs">
@@ -118,8 +117,8 @@ export default function Agents() {
             <textarea rows={3} value={form.bio} onChange={(e) => setForm((f) => ({ ...f, bio: e.target.value }))} placeholder="Short bio about this agent..." className={`${inputCls} resize-none`} />
           </div>
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={() => { setModalOpen(false); setForm(initialForm) }} className="flex-1 px-4 py-2.5 bg-jade-700/15 hover:bg-jade-700/25 text-jade-50 text-sm font-medium rounded-xl transition-all">Cancel</button>
-            <button type="submit" disabled={onboardMutation.isPending} className="flex-1 px-4 py-2.5 bg-jade-400 hover:bg-jade-500 text-jade-900 text-sm font-semibold rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2">
+            <button type="button" onClick={() => { setModalOpen(false); setForm(initialForm) }} className="flex-1 btn btn-secondary">Cancel</button>
+            <button type="submit" disabled={onboardMutation.isPending} className="flex-1 btn btn-primary disabled:opacity-50">
               {onboardMutation.isPending ? <span className="w-4 h-4 border-2 border-jade-900/30 border-t-jade-900 rounded-full animate-spin" /> : 'Onboard Agent'}
             </button>
           </div>

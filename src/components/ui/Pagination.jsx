@@ -12,16 +12,16 @@ export default function Pagination({ page, pages, total, limit, onPage }) {
   }
 
   return (
-    <div className="flex items-center justify-between px-5 py-3.5 border-t border-jade-700/25">
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 sm:px-5 py-3.5 border-t border-jade-700/25 bg-jade-900/20">
       <p className="text-[13px] text-jade-warm/70">
         Showing <span className="font-medium text-jade-50">{from}–{to}</span> of{' '}
         <span className="font-medium text-jade-50">{total}</span>
       </p>
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-1 overflow-x-auto pb-0.5 sm:pb-0">
         <button
           onClick={() => onPage(page - 1)}
           disabled={page <= 1}
-          className="px-2.5 py-1.5 text-[13px] rounded-lg text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="btn btn-sm btn-secondary disabled:opacity-30 disabled:cursor-not-allowed"
         >
           ‹ Prev
         </button>
@@ -32,7 +32,7 @@ export default function Pagination({ page, pages, total, limit, onPage }) {
             <button
               key={p}
               onClick={() => onPage(p)}
-              className={`w-8 h-8 text-[13px] rounded-lg transition-all ${
+              className={`w-8 h-8 text-[13px] rounded-lg shrink-0 transition-all ${
                 p === page
                   ? 'bg-jade-400 text-jade-900 font-semibold shadow-sm shadow-jade-400/20'
                   : 'text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15'
@@ -45,7 +45,7 @@ export default function Pagination({ page, pages, total, limit, onPage }) {
         <button
           onClick={() => onPage(page + 1)}
           disabled={page >= pages}
-          className="px-2.5 py-1.5 text-[13px] rounded-lg text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15 disabled:opacity-30 disabled:cursor-not-allowed transition-all"
+          className="btn btn-sm btn-secondary disabled:opacity-30 disabled:cursor-not-allowed"
         >
           Next ›
         </button>

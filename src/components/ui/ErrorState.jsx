@@ -13,7 +13,7 @@ export default function ErrorState({ message = 'Something went wrong', onRetry }
       {onRetry && (
         <button
           onClick={onRetry}
-          className="px-4 py-2 bg-jade-700/15 hover:bg-jade-700/25 text-jade-50 text-sm rounded-xl transition-all hover:-translate-y-0.5"
+          className="btn btn-secondary"
         >
           Retry
         </button>

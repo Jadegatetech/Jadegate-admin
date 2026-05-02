@@ -50,14 +50,16 @@ export default function ExchangeRate() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-jade-50 tracking-tight">Exchange Rate</h1>
-        <p className="text-jade-warm/60 text-sm mt-1">Manage the NGN to RMB conversion rate</p>
+      <div className="page-header">
+        <div>
+          <h1 className="page-title">Exchange Rate</h1>
+          <p className="page-subtitle">Manage the NGN to RMB conversion rate</p>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Active Rate Card */}
-        <div className="bg-jade-800 border border-jade-700/20 rounded-2xl p-6">
+        <div className="surface-card p-4 sm:p-6">
           <div className="flex items-center justify-between mb-5">
             <h2 className="text-[15px] font-semibold text-jade-50">Active Rate</h2>
             <Badge status="active" label="Live" />
@@ -101,7 +103,7 @@ export default function ExchangeRate() {
         </div>
 
         {/* Set New Rate Form */}
-        <div className="bg-jade-800 border border-jade-700/20 rounded-2xl p-6">
+        <div className="surface-card p-4 sm:p-6">
           <h2 className="text-[15px] font-semibold text-jade-50 mb-2">Set New Rate</h2>
           <p className="text-sm text-jade-warm/60 mb-5">
             Setting a new rate will immediately deactivate the current rate and apply to all new conversions.
@@ -122,7 +124,7 @@ export default function ExchangeRate() {
                   value={rateInput}
                   onChange={(e) => setRateInput(e.target.value)}
                   placeholder={activeRate ? `Current: ${activeRate.rateNGNtoRMB}` : 'e.g. 85.50'}
-                  className="w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-4 py-3 text-lg font-semibold focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 transition-all"
+                  className="form-field pr-24 text-lg font-semibold"
                 />
                 <span className="absolute right-4 top-1/2 -translate-y-1/2 text-jade-700/50 text-sm">NGN/RMB</span>
               </div>
@@ -144,7 +146,7 @@ export default function ExchangeRate() {
             <button
               type="submit"
               disabled={setRateMutation.isPending || !rateInput}
-              className="w-full bg-jade-400 hover:bg-jade-500 text-jade-900 font-semibold rounded-xl py-3 text-sm transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 hover:shadow-lg hover:shadow-jade-400/20"
+              className="w-full btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {setRateMutation.isPending ? (
                 <>
@@ -162,19 +164,19 @@ export default function ExchangeRate() {
       {/* Rate History */}
       <div>
         <h2 className="text-lg font-semibold text-jade-50 mb-4">Rate History</h2>
-        <div className="bg-jade-800 border border-jade-700/20 rounded-2xl overflow-hidden">
+        <div className="table-shell">
           {historyError ? (
             <ErrorState message="Failed to load rate history" />
           ) : (
             <>
-              <div className="overflow-x-auto">
-                <table className="w-full">
+              <div className="table-scroll">
+                <table className="data-table">
                   <thead>
-                    <tr className="border-b border-jade-700/25">
-                      <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Rate (NGN/RMB)</th>
-                      <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Set By</th>
-                      <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Date</th>
-                      <th className="px-5 py-3.5 text-left text-[11px] font-semibold text-jade-warm/60 uppercase tracking-wider">Status</th>
+                    <tr>
+                      <th>Rate (NGN/RMB)</th>
+                      <th>Set By</th>
+                      <th>Date</th>
+                      <th>Status</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -186,7 +188,7 @@ export default function ExchangeRate() {
                       </tr>
                     ) : (
                       history.map((r) => (
-                        <tr key={r._id} className="border-b border-jade-700/15 hover:bg-jade-700/10 transition-colors">
+                        <tr key={r._id}>
                           <td className="px-5 py-3.5">
                             <span className="text-jade-50 font-bold text-lg tracking-tight">{r.rateNGNtoRMB}</span>
                           </td>

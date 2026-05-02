@@ -49,7 +49,7 @@ export default function ActionModal({ conversion, actionType, onConfirm, onClose
             onChange={(e) => setAdminNote(e.target.value.slice(0, 500))}
             rows={3}
             placeholder="Add a note for this action..."
-            className="w-full bg-jade-900/80 border border-jade-700/30 text-jade-50 rounded-xl px-3.5 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-jade-400/40 focus:border-jade-400/30 placeholder-jade-700/60 resize-none transition-all"
+            className="form-field resize-none"
           />
           <p className="text-[11px] text-jade-700/40 mt-1 text-right">{adminNote.length}/500</p>
         </div>
@@ -58,14 +58,14 @@ export default function ActionModal({ conversion, actionType, onConfirm, onClose
           <button
             onClick={onClose}
             disabled={isLoading}
-            className="flex-1 px-4 py-2.5 bg-jade-700/15 hover:bg-jade-700/25 text-jade-50 text-sm font-medium rounded-xl transition-all disabled:opacity-50"
+            className="flex-1 btn btn-secondary disabled:opacity-50"
           >
             Cancel
           </button>
           <button
             onClick={() => onConfirm(conversion._id, adminNote)}
             disabled={isLoading}
-            className={`flex-1 px-4 py-2.5 text-sm font-semibold rounded-xl transition-all disabled:opacity-50 flex items-center justify-center gap-2 ${
+            className={`flex-1 btn disabled:opacity-50 ${
               isComplete
                 ? 'bg-green-500 hover:bg-green-400 text-white'
                 : 'bg-red-500 hover:bg-red-400 text-white'
