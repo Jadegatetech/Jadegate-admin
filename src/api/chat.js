@@ -20,5 +20,8 @@ export const assignSession = (sessionId, agentId) =>
 export const closeSession = (sessionId) =>
   api.patch(`/api/chat/sessions/${sessionId}/close`)
 
+export const resolveSession = (sessionId) =>
+  api.patch(`/api/chat/sessions/${sessionId}/resolve`)
+
 export const reopenSession = (sessionId) =>
   api.patch(`/api/chat/sessions/${sessionId}/reopen`)

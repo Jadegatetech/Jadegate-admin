@@ -79,6 +79,7 @@ api.interceptors.response.use(
         }
 
         api.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`
+        window.dispatchEvent(new CustomEvent('token-refreshed'))
         processQueue(null, newAccessToken)
 
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`
