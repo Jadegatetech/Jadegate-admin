@@ -10,6 +10,11 @@ const variants = {
   admin: 'bg-jade-400/12 text-jade-400 border border-jade-400/20',
   alipay: 'bg-blue-400/12 text-blue-400 border border-blue-400/20',
   bank_transfer: 'bg-purple-400/12 text-purple-400 border border-purple-400/20',
+  running: 'bg-jade-400/12 text-jade-400 border border-jade-400/20',
+  low: 'bg-blue-400/12 text-blue-400 border border-blue-400/20',
+  medium: 'bg-amber-400/12 text-amber-300 border border-amber-400/20',
+  high: 'bg-orange-400/12 text-orange-300 border border-orange-400/20',
+  critical: 'bg-red-400/12 text-red-400 border border-red-400/20',
 }
 
 const dotColors = {
@@ -24,6 +29,11 @@ const dotColors = {
   admin: 'bg-jade-400',
   alipay: 'bg-blue-400',
   bank_transfer: 'bg-purple-400',
+  running: 'bg-jade-400',
+  low: 'bg-blue-400',
+  medium: 'bg-amber-300',
+  high: 'bg-orange-300',
+  critical: 'bg-red-400',
 }
 
 export default function Badge({ status, label, className = '' }) {

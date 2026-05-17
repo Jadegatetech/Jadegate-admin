@@ -22,6 +22,8 @@ export default function ConversionDetailModal({ conversion, onClose }) {
   if (!conversion) return null
 
   const c = conversion
+  const isBankMethod = c.receivingMethod === 'chinese_bank' || c.receivingMethod === 'bank_transfer'
+  const cardDisplay = c.bankCardDisplay ?? (c.bankCardLast4 ? `****${c.bankCardLast4}` : 'Masked')
 
   return (
     <Modal isOpen={!!conversion} onClose={onClose} title="Conversion Detail" size="lg">
@@ -54,7 +56,7 @@ export default function ConversionDetailModal({ conversion, onClose }) {
           <dl>
             <Row label="Amount NGN" value={formatNGN(c.amountNGN)} />
             <Row label="Amount RMB" value={formatRMB(c.amountRMB)} />
-            <Row label="Rate Used" value={c.rateUsed ? `${c.rateUsed} NGN/RMB` : '—'} />
+            <Row label="Rate Used" value={c.rateUsed ? `1 RMB = ₦${c.rateUsed}` : '—'} />
           </dl>
         </div>
 
@@ -63,16 +65,16 @@ export default function ConversionDetailModal({ conversion, onClose }) {
           <p className="text-[11px] font-semibold text-jade-700/60 uppercase tracking-wider mb-2">Receiving Method</p>
           <dl>
             <Row label="Method" value={
-              <Badge status={c.receivingMethod} label={c.receivingMethod === 'chinese_bank' ? 'Chinese Bank Transfer' : 'Alipay'} />
+              <Badge status={c.receivingMethod} label={isBankMethod ? 'Chinese Bank Transfer' : 'Alipay'} />
             } />
             {c.receivingMethod === 'alipay' && (
-              <Row label="Alipay Contact" value={c.alipayContact} />
+              <Row label="Alipay Contact" value={c.alipayContact ?? c.alipayId} />
             )}
-            {c.receivingMethod === 'chinese_bank' && (
+            {isBankMethod && (
               <>
                 <Row label="Recipient Name" value={c.bankRecipientName} />
                 <Row label="Bank Name" value={c.bankName} />
-                <Row label="Card Number" value={c.bankCardDisplay} />
+                <Row label="Card Number" value={cardDisplay} />
               </>
             )}
           </dl>

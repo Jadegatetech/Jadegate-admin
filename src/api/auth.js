@@ -9,5 +9,7 @@ export const logout = () =>
 export const getMe = () =>
   api.get('/api/auth/me')
 
-export const refreshToken = (refreshToken) =>
-  api.post('/api/auth/refresh', { refreshToken })
+export const refreshToken = (refreshToken, sessionId) =>
+  api.post('/api/auth/refresh', { refreshToken, sessionId }, {
+    headers: { 'x-session-id': sessionId },
+  })

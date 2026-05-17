@@ -160,18 +160,22 @@ export default function PendingConversions() {
                         </td>
                         <td className="px-5 py-3.5 text-sm font-semibold text-jade-50 whitespace-nowrap">{formatNGN(c.amountNGN)}</td>
                         <td className="px-5 py-3.5 text-sm text-jade-50/80 whitespace-nowrap">{formatRMB(c.amountRMB)}</td>
-                        <td className="px-5 py-3.5 text-sm text-jade-warm/60">{c.rateUsed ?? '—'}</td>
+                        <td className="px-5 py-3.5 text-sm text-jade-warm/60">
+                          {c.rateUsed ? `₦${c.rateUsed} per RMB` : '—'}
+                        </td>
                         <td className="px-5 py-3.5">
                           <div className="space-y-1">
                             <Badge
                               status={c.receivingMethod}
-                              label={c.receivingMethod === 'bank_transfer' ? 'Bank' : 'Alipay'}
+                              label={c.receivingMethod === 'bank_transfer' || c.receivingMethod === 'chinese_bank' ? 'Bank' : 'Alipay'}
                             />
                             {c.receivingMethod === 'alipay' && c.alipayId && (
                               <p className="text-xs text-jade-700/60 font-mono">{c.alipayId}</p>
                             )}
-                            {c.receivingMethod === 'bank_transfer' && c.bankCardDisplay && (
-                              <p className="text-xs text-jade-700/60 font-mono">{c.bankCardDisplay}</p>
+                            {(c.receivingMethod === 'bank_transfer' || c.receivingMethod === 'chinese_bank') && (
+                              <p className="text-xs text-jade-700/60 font-mono">
+                                {c.bankCardDisplay ?? (c.bankCardLast4 ? `****${c.bankCardLast4}` : 'Masked')}
+                              </p>
                             )}
                           </div>
                         </td>

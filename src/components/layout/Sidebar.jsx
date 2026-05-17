@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getPendingConversions } from '../../api/conversions'
 import { getSessions } from '../../api/chat'
+import { useAuth } from '../../context/useAuth'
 import jadeLogo from '../../assets/Jade 1.1.png'
 
 const navItems = [
@@ -68,6 +69,17 @@ const navItems = [
     ),
   },
   {
+    to: '/reconciliation',
+    label: 'Reconciliation',
+    adminOnly: true,
+    icon: (
+      <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+          d="M9 17v-6m4 6V7m4 10v-4M5 21h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v14a2 2 0 002 2z" />
+      </svg>
+    ),
+  },
+  {
     to: '/chat',
     label: 'Support Chat',
     chatBadge: true,
@@ -81,6 +93,7 @@ const navItems = [
 ]
 
 export default function Sidebar({ mobile = false, onClose }) {
+  const { user } = useAuth()
   const { data: pendingData } = useQuery({
     queryKey: ['pendingConversions', 1],
     queryFn: () => getPendingConversions({ page: 1, limit: 1 }),
@@ -100,6 +113,7 @@ export default function Sidebar({ mobile = false, onClose }) {
 
   const pendingCount = pendingData ?? 0
   const chatUnread = unreadCount ?? 0
+  const visibleNavItems = navItems.filter((item) => !item.adminOnly || user?.role === 'admin')
 
   const base = 'group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200'
   const active = 'bg-jade-400/12 text-jade-400 shadow-[inset_0_0_0_1px_rgba(39,234,175,0.15)]'
@@ -128,7 +142,7 @@ export default function Sidebar({ mobile = false, onClose }) {
       {/* Nav */}
       <nav className="flex-1 overflow-y-auto px-3 py-4 space-y-0.5">
         <p className="text-[10px] font-semibold text-jade-700/60 uppercase tracking-widest px-3 mb-2">Navigation</p>
-        {navItems.map((item) => (
+        {visibleNavItems.map((item) => (
           <NavLink
             key={item.to}
             to={item.to}

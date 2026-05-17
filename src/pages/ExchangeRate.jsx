@@ -30,7 +30,7 @@ export default function ExchangeRate() {
   const setRateMutation = useMutation({
     mutationFn: (rate) => setRate(rate),
     onSuccess: (res) => {
-      toast.success(`Rate set to ${res.data?.data?.rateNGNtoRMB} NGN/RMB`)
+      toast.success(`Rate set to 1 RMB = ₦${res.data?.data?.rateNGNtoRMB}`)
       queryClient.invalidateQueries({ queryKey: ['activeRate'] })
       queryClient.invalidateQueries({ queryKey: ['rateHistory'] })
       setRateInput('')
@@ -53,7 +53,7 @@ export default function ExchangeRate() {
       <div className="page-header">
         <div>
           <h1 className="page-title">Exchange Rate</h1>
-          <p className="page-subtitle">Manage the NGN to RMB conversion rate</p>
+          <p className="page-subtitle">Manage the NGN per RMB rate used for new conversions</p>
         </div>
       </div>
 
@@ -124,9 +124,9 @@ export default function ExchangeRate() {
                   value={rateInput}
                   onChange={(e) => setRateInput(e.target.value)}
                   placeholder={activeRate ? `Current: ${activeRate.rateNGNtoRMB}` : 'e.g. 85.50'}
-                  className="form-field pr-24 text-lg font-semibold"
+                  className="form-field pr-32 text-lg font-semibold"
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-jade-700/50 text-sm">NGN/RMB</span>
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-jade-700/50 text-sm">NGN per RMB</span>
               </div>
               <p className="text-xs text-jade-700/50 mt-1.5">Must be between 0 and 1000</p>
             </div>
@@ -173,7 +173,7 @@ export default function ExchangeRate() {
                 <table className="data-table">
                   <thead>
                     <tr>
-                      <th>Rate (NGN/RMB)</th>
+                      <th>Rate (NGN per RMB)</th>
                       <th>Set By</th>
                       <th>Date</th>
                       <th>Status</th>

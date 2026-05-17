@@ -141,11 +141,13 @@ export default function Conversions() {
                         </td>
                         <td className="px-5 py-3.5 text-sm text-jade-50 font-medium whitespace-nowrap">{formatNGN(c.amountNGN)}</td>
                         <td className="px-5 py-3.5 text-sm text-jade-50/80 whitespace-nowrap">{formatRMB(c.amountRMB)}</td>
-                        <td className="px-5 py-3.5 text-sm text-jade-warm/60">{c.rateUsed ?? '—'}</td>
+                        <td className="px-5 py-3.5 text-sm text-jade-warm/60">
+                          {c.rateUsed ? `₦${c.rateUsed} per RMB` : '—'}
+                        </td>
                         <td className="px-5 py-3.5">
                           <Badge
                             status={c.receivingMethod}
-                            label={c.receivingMethod === 'chinese_bank' ? 'Chinese Bank' : 'Alipay'}
+                            label={c.receivingMethod === 'chinese_bank' || c.receivingMethod === 'bank_transfer' ? 'Chinese Bank' : 'Alipay'}
                           />
                         </td>
                         <td className="px-5 py-3.5">

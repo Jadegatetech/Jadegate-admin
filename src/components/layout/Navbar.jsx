@@ -10,6 +10,7 @@ const pageTitles = {
   '/agents': 'Agents',
   '/audit-logs': 'Audit Logs',
   '/chat': 'Support Chat',
+  '/reconciliation': 'Reconciliation',
 }
 
 export default function Navbar({ onMenuToggle }) {
@@ -21,7 +22,7 @@ export default function Navbar({ onMenuToggle }) {
     ? user.fullName.split(' ').map((n) => n[0]).join('').toUpperCase().slice(0, 2)
     : 'AD'
 
-  const pageTitle = pageTitles[pathname] ?? ''
+  const pageTitle = pageTitles[pathname] ?? (pathname.startsWith('/reconciliation') ? 'Reconciliation' : '')
 
   return (
     <header className="h-16 bg-jade-800 border-b border-jade-700/15 flex items-center px-4 md:px-6 gap-4 shrink-0">
