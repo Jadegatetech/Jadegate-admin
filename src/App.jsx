@@ -13,6 +13,7 @@ import Chat from './pages/Chat'
 import ReconciliationRuns from './pages/ReconciliationRuns'
 import ReconciliationRunDetail from './pages/ReconciliationRunDetail'
 import ReconciliationMismatches from './pages/ReconciliationMismatches'
+import Notifications from './pages/Notifications'
 
 export default function App() {
   return (
@@ -38,6 +39,7 @@ export default function App() {
             <Route path="reconciliation" element={<ReconciliationRuns />} />
             <Route path="reconciliation/runs/:runId" element={<ReconciliationRunDetail />} />
             <Route path="reconciliation/runs/:runId/mismatches" element={<ReconciliationMismatches />} />
+            <Route path="notifications" element={<Notifications />} />
           </Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

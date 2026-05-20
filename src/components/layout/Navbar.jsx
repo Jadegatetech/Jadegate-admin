@@ -11,6 +11,7 @@ const pageTitles = {
   '/audit-logs': 'Audit Logs',
   '/chat': 'Support Chat',
   '/reconciliation': 'Reconciliation',
+  '/notifications': 'Send Notification',
 }
 
 export default function Navbar({ onMenuToggle }) {
