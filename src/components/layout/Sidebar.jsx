@@ -2,6 +2,7 @@ import { NavLink } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { getPendingConversions } from '../../api/conversions'
 import { getSessions } from '../../api/chat'
+import { getReports } from '../../api/reports'
 import { useAuth } from '../../context/useAuth'
 import jadeLogo from '../../assets/Jade 1.1.png'
 
@@ -101,6 +102,18 @@ const navItems = [
       </svg>
     ),
   },
+  {
+    to: '/reported-messages',
+    label: 'Reported Messages',
+    adminOnly: true,
+    reportsBadge: true,
+    icon: (
+      <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+          d="M3 21v-4m0 0V5a2 2 0 012-2h6.5l.5 2H20l-3 6 3 6h-8l-.5-2H5a2 2 0 00-2 2z" />
+      </svg>
+    ),
+  },
 ]
 
 export default function Sidebar({ mobile = false, onClose }) {
@@ -122,13 +135,22 @@ export default function Sidebar({ mobile = false, onClose }) {
     },
   })
 
+  const { data: pendingReports } = useQuery({
+    queryKey: ['reportsPending'],
+    queryFn: () => getReports({ status: 'pending', page: 1, limit: 1 }),
+    refetchInterval: 30_000,
+    enabled: user?.role === 'admin',
+    select: (res) => res.data?.pagination?.total ?? 0,
+  })
+
   const pendingCount = pendingData ?? 0
   const chatUnread = unreadCount ?? 0
+  const reportsCount = pendingReports ?? 0
   const visibleNavItems = navItems.filter((item) => !item.adminOnly || user?.role === 'admin')
 
   const base = 'group flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-all duration-200'
   const active = 'bg-jade-400/12 text-jade-400 shadow-[inset_0_0_0_1px_rgba(39,234,175,0.15)]'
-  const inactive = 'text-jade-warm/80 hover:text-jade-50 hover:bg-jade-700/15'
+  const inactive = 'text-jade-warm/90 hover:text-jade-50 hover:bg-jade-700/15'
 
   return (
     <aside className={`flex flex-col h-full ${mobile ? 'w-full' : 'w-[260px]'} bg-jade-800 border-r border-jade-700/15`}>
@@ -173,6 +195,11 @@ export default function Sidebar({ mobile = false, onClose }) {
             {item.chatBadge && chatUnread > 0 && (
               <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center leading-tight">
                 {chatUnread > 99 ? '99+' : chatUnread}
+              </span>
+            )}
+            {item.reportsBadge && reportsCount > 0 && (
+              <span className="bg-red-500 text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[20px] text-center leading-tight">
+                {reportsCount > 99 ? '99+' : reportsCount}
               </span>
             )}
           </NavLink>

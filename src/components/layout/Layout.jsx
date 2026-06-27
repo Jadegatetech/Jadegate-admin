@@ -1,10 +1,11 @@
 import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useLocation } from 'react-router-dom'
 import Sidebar from './Sidebar'
 import Navbar from './Navbar'
 
 export default function Layout() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { pathname } = useLocation()
 
   return (
     <div className="flex h-screen overflow-hidden app-shell">
@@ -30,7 +31,7 @@ export default function Layout() {
       <div className="flex flex-col flex-1 min-w-0 overflow-hidden">
         <Navbar onMenuToggle={() => setSidebarOpen((v) => !v)} />
         <main className="flex-1 overflow-y-auto bg-transparent p-3 sm:p-4 md:p-6 lg:p-8">
-          <div className="max-w-[1600px] mx-auto">
+          <div key={pathname} className="max-w-[1600px] mx-auto animate-fade-in-up">
             <Outlet />
           </div>
         </main>

@@ -10,6 +10,7 @@ const pageTitles = {
   '/agents': 'Agents',
   '/audit-logs': 'Audit Logs',
   '/chat': 'Support Chat',
+  '/reported-messages': 'Reported Messages',
   '/reconciliation': 'Reconciliation',
   '/notifications': 'Send Notification',
 }

@@ -5,6 +5,7 @@ import Modal from '../components/ui/Modal'
 import Pagination from '../components/ui/Pagination'
 import { SkeletonTable } from '../components/ui/Skeleton'
 import ErrorState from '../components/ui/ErrorState'
+import EmptyState from '../components/ui/EmptyState'
 
 const ACTION_COLORS = {
   CREATE: 'text-green-400 bg-green-400/10',
@@ -59,7 +60,7 @@ export default function AuditLogs() {
                 </tr></thead>
                 <tbody>
                   {isLoading ? <SkeletonTable rows={8} cols={7} /> : logs.length === 0 ? (
-                    <tr><td colSpan={7} className="px-5 py-16 text-center text-jade-700/60">No audit logs found</td></tr>
+                    <tr><td colSpan={7}><EmptyState title="No audit logs found" message="Admin actions will be recorded here." /></td></tr>
                   ) : logs.map((log) => (
                     <tr key={log._id}>
                       <td className="px-5 py-3.5">

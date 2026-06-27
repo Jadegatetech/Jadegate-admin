@@ -11,6 +11,8 @@ import {
   reopenSession,
 } from '../api/chat'
 import { useAuth } from '../context/useAuth'
+import { isRemovedMessage, REMOVED_MESSAGE_TEXT } from '../utils/moderation'
+import EmptyState from '../components/ui/EmptyState'
 
 const SOCKET_URL = import.meta.env.VITE_API_URL || 'https://jadegate-backend.onrender.com'
 
@@ -485,11 +487,21 @@ export default function Chat() {
                 ))}
               </div>
             ) : messages.length === 0 ? (
-              <p className="text-center text-jade-700/50 text-sm py-12">No messages yet</p>
+              <EmptyState
+                title="No messages yet"
+                message="Messages in this conversation will appear here."
+                icon={(
+                  <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5}
+                      d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                  </svg>
+                )}
+              />
             ) : (
               messages.map((msg) => {
                 const isOwn = msg.sender?._id === user?._id || msg.sender?.role === 'admin'
-                const imgSrc = msg.imageUrl ?? msg.attachment?.url
+                const removed = isRemovedMessage(msg)
+                const imgSrc = removed ? null : (msg.imageUrl ?? msg.attachment?.url)
                 return (
                   <div key={msg._id} className={`flex ${isOwn ? 'justify-end' : 'justify-start'}`}>
                     <div className="max-w-[86%] sm:max-w-[70%]">
@@ -500,21 +512,29 @@ export default function Chat() {
                       )}
                       <div
                         className={`rounded-2xl px-4 py-2.5 ${
-                          isOwn
+                          removed
+                            ? 'bg-jade-800/60 text-jade-700/70 italic border border-jade-700/15 rounded-bl-md'
+                            : isOwn
                             ? 'bg-jade-400 text-jade-900 rounded-br-md'
                             : 'bg-jade-800 text-jade-50 rounded-bl-md border border-jade-700/15'
                         }`}
                       >
-                        {imgSrc && (
-                          <img
-                            src={imgSrc}
-                            alt="attachment"
-                            className="rounded-xl max-w-full mb-2 max-h-48 object-cover cursor-pointer"
-                            onClick={() => window.open(imgSrc, '_blank')}
-                          />
-                        )}
-                        {msg.text && (
-                          <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                        {removed ? (
+                          <p className="text-sm leading-relaxed">{REMOVED_MESSAGE_TEXT}</p>
+                        ) : (
+                          <>
+                            {imgSrc && (
+                              <img
+                                src={imgSrc}
+                                alt="attachment"
+                                className="rounded-xl max-w-full mb-2 max-h-48 object-cover cursor-pointer"
+                                onClick={() => window.open(imgSrc, '_blank')}
+                              />
+                            )}
+                            {msg.text && (
+                              <p className="text-sm leading-relaxed whitespace-pre-wrap">{msg.text}</p>
+                            )}
+                          </>
                         )}
                       </div>
                       <p

@@ -25,23 +25,28 @@ export default function Pagination({ page, pages, total, limit, onPage }) {
         >
           ‹ Prev
         </button>
-        {getPages().map((p, i) =>
-          p === '...' ? (
-            <span key={`ellipsis-${i}`} className="px-1.5 text-jade-700/50">…</span>
-          ) : (
-            <button
-              key={p}
-              onClick={() => onPage(p)}
-              className={`w-8 h-8 text-[13px] rounded-lg shrink-0 transition-all ${
-                p === page
-                  ? 'bg-jade-400 text-jade-900 font-semibold shadow-sm shadow-jade-400/20'
-                  : 'text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15'
-              }`}
-            >
-              {p}
-            </button>
-          )
-        )}
+        <div className="hidden sm:flex items-center gap-1">
+          {getPages().map((p, i) =>
+            p === '...' ? (
+              <span key={`ellipsis-${i}`} className="px-1.5 text-jade-700/50">…</span>
+            ) : (
+              <button
+                key={p}
+                onClick={() => onPage(p)}
+                className={`w-8 h-8 text-[13px] rounded-lg shrink-0 transition-all ${
+                  p === page
+                    ? 'bg-jade-400 text-jade-900 font-semibold shadow-sm shadow-jade-400/20'
+                    : 'text-jade-warm/70 hover:text-jade-50 hover:bg-jade-700/15'
+                }`}
+              >
+                {p}
+              </button>
+            )
+          )}
+        </div>
+        <span className="sm:hidden px-2 text-[13px] text-jade-warm/70">
+          {page} / {pages}
+        </span>
         <button
           onClick={() => onPage(page + 1)}
           disabled={page >= pages}

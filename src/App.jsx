@@ -10,6 +10,7 @@ import ExchangeRate from './pages/ExchangeRate'
 import Agents from './pages/Agents'
 import AuditLogs from './pages/AuditLogs'
 import Chat from './pages/Chat'
+import ReportedMessages from './pages/ReportedMessages'
 import ReconciliationRuns from './pages/ReconciliationRuns'
 import ReconciliationRunDetail from './pages/ReconciliationRunDetail'
 import ReconciliationMismatches from './pages/ReconciliationMismatches'
@@ -36,6 +37,7 @@ export default function App() {
             <Route path="agents" element={<Agents />} />
             <Route path="audit-logs" element={<AuditLogs />} />
             <Route path="chat" element={<Chat />} />
+            <Route path="reported-messages" element={<ReportedMessages />} />
             <Route path="reconciliation" element={<ReconciliationRuns />} />
             <Route path="reconciliation/runs/:runId" element={<ReconciliationRunDetail />} />
             <Route path="reconciliation/runs/:runId/mismatches" element={<ReconciliationMismatches />} />
